@@ -1,0 +1,55 @@
+{
+  "task": "end_boundary",
+  "test": false,
+
+  "dict_directory": "./dicts/ace04",
+  "train_data": "./data/ace04/context_train.json",
+  "dev_data": "./data/ace04/context_dev.json",
+  "test_data": "./data/ace04/context_test.json",
+
+  "gpu": 1,
+  "fine": false,
+  "previous_model": {},
+
+  "model": {
+    "encoder": {
+      "bert": "./bert-large-cased",
+      "data": "ace04",
+      "train_word_embedding": true,
+      "dim_bert": 1024,
+      "dim_word": 300,
+      "num_word": 13569,
+      "dim_char": 512,
+      "num_char": 86,
+      "dim_char_lstm": 512,
+      "num_char_layer": 2,
+      "dim_pos": 512,
+      "num_pos": 38,
+      "dim_lstm": 1024,
+      "num_lstm_layer": 2,
+      "char_dropout": 0.5,
+      "dropout": 0.5
+    },
+    "fc_layer": {
+      "dim_in": 1024,
+      "dim_hid": 512,
+      "dim_out": 1,
+      "dropout": 0.5
+    }
+  },
+
+  "stages": ["train", "test"],
+
+  "focal": true,
+  "alpha": 0.9,
+  "split_length": [0, 50, 100, 150, 200, 2000],
+  "train_batch_size": [80, 30, 20, 10, 8],
+  "evaluate_batch_size": 30,
+  "learning_rate": 5e-4,
+  "bert_learning_rate": 1e-5,
+  "saving_threshold": 93,
+
+  "start_epoch": 1,
+  "end_epoch": 100,
+  "warmup_epoch": 5
+}

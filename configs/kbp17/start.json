@@ -1,0 +1,55 @@
+{
+  "task": "start_boundary",
+  "test": false,
+
+  "dict_directory": "./dicts/kbp17",
+  "train_data": "./data/kbp17/context_train.json",
+  "dev_data": "./data/kbp17/context_dev.json",
+  "test_data": "./data/kbp17/context_test.json",
+
+  "gpu": 5,
+  "fine": false,
+  "previous_model": {},
+
+  "model": {
+    "encoder": {
+      "bert": "./bert-large-cased",
+      "data": "kbp17",
+      "train_word_embedding": true,
+      "dim_bert": 1024,
+      "dim_word": 300,
+      "num_word": 16067,
+      "dim_char": 512,
+      "num_char": 122,
+      "dim_char_lstm": 512,
+      "num_char_layer": 2,
+      "dim_pos": 512,
+      "num_pos": 49,
+      "dim_lstm": 1024,
+      "num_lstm_layer": 2,
+      "char_dropout": 0.5,
+      "dropout": 0.5
+    },
+    "fc_layer": {
+      "dim_in": 1024,
+      "dim_hid": 512,
+      "dim_out": 1,
+      "dropout": 0.5
+    }
+  },
+
+  "stages": ["train", "test"],
+
+  "focal": true,
+  "alpha": 0.9,
+  "split_length": [0, 50, 100, 150, 200, 2000],
+  "train_batch_size": [80, 40, 30, 20, 10],
+  "evaluate_batch_size": 100,
+  "learning_rate": 5e-4,
+  "bert_learning_rate": 1e-5,
+  "saving_threshold": 92,
+
+  "start_epoch": 1,
+  "end_epoch": 100,
+  "warmup_epoch": 5
+}

@@ -1,0 +1,53 @@
+{
+  "name": "start",
+  "mode": "passage",
+  "test": false,
+
+  "dict_directory": "./dicts/genia",
+  "train_data": "./data/genia/passage_train.json",
+  "test_data": "./data/genia/passage_test.json",
+
+  "gpu": 4,
+  "fine": false,
+  "previous_model": {},
+
+  "model": {
+    "encoder": {
+      "bert": "./biobert-large-cased-v1.1-squad",
+      "data": "genia",
+      "train_word_embedding": true,
+      "dim_bert": 1024,
+      "dim_word": 200,
+      "num_word": 14042,
+      "dim_char": 512,
+      "num_char": 84,
+      "dim_char_lstm": 512,
+      "num_char_layer": 2,
+      "dim_pos": 512,
+      "num_pos": 24,
+      "dim_lstm": 1024,
+      "num_lstm_layer": 2,
+      "char_dropout": 0.2,
+      "dropout": 0.5
+    },
+    "fc_layer": {
+      "dim_in": 1024,
+      "dim_hid": 512,
+      "dim_out": 1,
+      "dropout": 0.5
+    }
+  },
+
+  "stages": ["train", "test"],
+
+  "focal": true,
+  "alpha": 0.9,
+  "batch_size": 4,
+  "learning_rate": 1e-3,
+  "bert_learning_rate": 1e-5,
+  "saving_threshold": 86,
+
+  "start_epoch": 1,
+  "end_epoch": 100,
+  "warmup_epoch": 20
+}

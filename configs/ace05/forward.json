@@ -1,0 +1,67 @@
+{
+  "task": "entity",
+  "test": false,
+  "dict_directory": "./dicts/ace05",
+  "train_data": "./data/ace05/context_train.json",
+  "dev_data": "./data/ace05/context_dev.json",
+  "test_data": "./data/ace05/context_test.json",
+
+  "gpu": 4,
+  "fine": false,
+  "previous_model": {},
+  "start_identifier": {
+    "config_path": "./configs/ace05/start/focal.json",
+    "model_path": "./check_points/ace05/focal/ace05-start-focal-2022-05-21-19:06:15-best.pth",
+    "train_coe": 6,
+    "test_coe": 1.1,
+    "extend": 2
+  },
+
+  "model": {
+    "mode": "lstm",
+    "direction": "forward",
+   "encoder": {
+      "bert": "./bert-large-cased",
+      "data": "ace05",
+      "train_word_embedding": true,
+      "dim_bert": 1024,
+      "dim_word": 300,
+      "num_word": 12757,
+      "dim_char": 512,
+      "num_char": 87,
+      "dim_char_lstm": 512,
+      "num_char_layer": 2,
+      "dim_pos": 512,
+      "num_pos": 49,
+      "dim_lstm": 1024,
+      "num_lstm_layer": 2,
+      "char_dropout": 0.5,
+      "dropout": 0.5
+    },
+    "sub_sequence_encoder": {
+      "dim_lstm": 1024,
+      "num_layer": 1
+    },
+    "fc_layer": {
+      "dim_in": 1024,
+      "dim_hid": 512,
+      "dim_out": 9,
+      "dropout": 0.5
+    }
+  },
+
+  "stages": ["train", "test"],
+
+  "focal": false,
+  "alpha": [1, 1, 1, 1, 1, 1, 1],
+  "split_length": [0, 50, 100, 150, 200, 2000],
+  "train_batch_size": [40, 14, 10, 5, 4],
+  "evaluate_batch_size": 20,
+  "learning_rate": 1e-3,
+  "bert_learning_rate": 1e-5,
+  "saving_threshold": 86.5,
+
+  "start_epoch": 1,
+  "end_epoch": 100,
+  "warmup_epoch": 5
+}

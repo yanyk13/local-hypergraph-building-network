@@ -1,0 +1,66 @@
+{
+  "task": "entity",
+  "test": false,
+
+  "dict_directory": "./dicts/genia",
+  "train_data": "./data/genia/passage_train.json",
+  "test_data": "./data/genia/passage_test.json",
+
+  "gpu": 0,
+  "fine": false,
+  "previous_model": {},
+  "start_identifier": {
+    "config_path": "./configs/genia/start/passage_bio2.json",
+    "model_path": "./check_points/start/passage_bio2-2022-05-04-14:48:13-.pth",
+    "train_coe": 3.5,
+    "test_coe": 2.5,
+    "extend": 2
+  },
+
+  "model": {
+    "mode": "lstm",
+    "direction": "forward",
+    "encoder": {
+      "bert": "./biobert-large-cased-v1.1-squad",
+      "data": "genia",
+      "train_word_embedding": true,
+      "dim_bert": 1024,
+      "dim_word": 200,
+      "num_word": 14042,
+      "dim_char": 256,
+      "num_char": 84,
+      "dim_char_lstm": 512,
+      "num_char_layer": 2,
+      "num_pos": 24,
+      "dim_pos": 256,
+      "dim_lstm": 1024,
+      "num_lstm_layer": 2,
+      "char_dropout": 0.2,
+      "dropout": 0.5
+    },
+    "sub_sequence_encoder": {
+      "dim_lstm": 1024,
+      "num_layer": 1
+    },
+    "fc_layer": {
+      "dim_in": 1024,
+      "dim_hid": 512,
+      "dim_out": 7,
+      "dropout": 0.5
+    }
+  },
+
+  "stages": ["train", "test"],
+
+  "focal": false,
+  "alpha": [1, 1, 1, 1, 1, 1, 1],
+  "batch_size": 1,
+  "sub_batch_size": 20,
+  "learning_rate": 1e-3,
+  "bert_learning_rate": 1e-5,
+  "saving_threshold": 80.5,
+
+  "start_epoch": 1,
+  "end_epoch": 100,
+  "warmup_epoch": 20
+}
